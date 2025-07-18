@@ -125,7 +125,7 @@
     </link>
 
     <link name="thruster3">
-      <pose>-0.15 -0.092 0.0 -1.571 1.571 0.785</pose>
+      <pose>-0.14 -0.092 0.0 -1.571 1.571 0.785</pose>
       <visual name="thruster_prop_visual">
         <pose>0 0 0 1.571 0 0</pose>
         <geometry>
@@ -148,7 +148,7 @@
     </link>
 
     <link name="thruster4">
-      <pose>-0.15 0.092 0.0 -1.571 1.571 2.356</pose>
+      <pose>-0.14 0.092 0.0 -1.571 1.571 2.356</pose>
       <visual name="thruster_prop_visual">
         <pose>0 0 0 1.571 0 0</pose>
         <geometry>

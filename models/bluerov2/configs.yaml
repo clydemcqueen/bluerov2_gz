@@ -22,10 +22,10 @@ thrusters:
   - x: 0.14 # Thruster 2
     y: 0.092
     z: 0.0
-  - x: -0.15 # Thruster 3
+  - x: -0.14 # Thruster 3
     y: -0.092
     z: 0.0
-  - x: -0.15 # Thruster 4
+  - x: -0.14 # Thruster 4
     y: 0.092
     z: 0.0
   - x: 0.0 # Thruster 5
