@@ -2,6 +2,8 @@
 
 # Modify this for your environment
 
+# Not required for ROS users, see CMakeLists.txt and hooks/setup.dsv
+
 if [[ -z "${ARDUPILOT_GAZEBO}" ]]; then
   export ARDUPILOT_GAZEBO="$HOME/ardupilot_gazebo"
 fi

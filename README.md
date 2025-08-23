@@ -72,6 +72,11 @@ disarm
 Additional information regarding the usage of each model may be found in a model's
 respective directory.
 
+## ROS2 and Colcon
+
+ROS2 users should add `ardupilot_gazebo -b ros2` and `bluerov2_gz` to the colcon workspace and use
+colcon to build and manage the environment.
+
 ## Caveats
 
 * The models need tuning
