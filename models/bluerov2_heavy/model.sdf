@@ -435,7 +435,7 @@
 
       <!-- Transform from the Gazebo body frame (x-forward, y-left, z-up)
            to the ArduPilot body frame (x-forward, y-right, z-down) -->
-      <modelXYZToAirplaneXForwardZDown>0 0 0 3.142 0 0</modelXYZToAirplaneXForwardZDown>
+      <modelXYZToAirplaneXForwardZDown>0 1.571 0 3.142 0 0</modelXYZToAirplaneXForwardZDown>
 
       <!-- Transform from the Gazebo world frame (ENU)
            to the ArduPilot world frame (NED) -->
