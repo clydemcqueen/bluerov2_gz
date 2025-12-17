@@ -29,9 +29,10 @@ export GZ_SIM_SYSTEM_PLUGIN_PATH=~/ardupilot_gazebo/build
 gz sim -v 3 -r <gazebo-world-file>
 ~~~
 
-where `<gazebo-world-file>` should be replaced with either `bluerov2_underwater.world` for
-the BlueROV2 base configuration or `bluerov2_heavy_underwater.world` for the BlueROV2
-Heavy configuration.
+where `<gazebo-world-file>` should be replaced with:
+* `bluerov2_underwater.world` for the BlueROV2 base configuration
+* `bluerov2_heavy_underwater.world` for the BlueROV2 Heavy configuration
+* `bluerov2_ping.world` for a BlueROV2 base with a Ping sonar
 
 Once Gazebo has been launched, you can directly send thrust commands to the BlueROV2
 model in Gazebo:
@@ -42,9 +43,10 @@ scripts/cw.sh <model_name>
 scripts/stop.sh <model_name>
 ~~~
 
-where `<model_name>` is replaced with the corresponding model defined in the world (i.e.,
-`bluerov2` for the `bluerov2_underwater.world` or `bluerov2_heavy` for the
-`bluerov2_heavy_underwater.world`).
+where `<model_name>` is replaced with the corresponding model defined in the world:
+* `bluerov2` for the `bluerov2_underwater.world`
+* `bluerov2_heavy` for the `bluerov2_heavy_underwater.world`
+* `bluerov2_ping` for the `bluerov2_ping.world`
 
 Now launch ArduSub and ardupilot_gazebo:
 
@@ -76,10 +78,6 @@ respective directory.
 
 ROS2 users should add `ardupilot_gazebo -b ros2` and `bluerov2_gz` to the colcon workspace and use
 colcon to build and manage the environment.
-
-## Caveats
-
-* The models need tuning
 
 ## References
 

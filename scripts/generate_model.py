@@ -45,6 +45,7 @@ boxes and inertia, so spinning the propeller does affect the simulation.
 Typical usage:
 scripts/generate_model.py models/bluerov2/model.sdf.in models/bluerov2/model.sdf models/bluerov2/configs.yaml
 scripts/generate_model.py models/bluerov2_heavy/model.sdf.in models/bluerov2_heavy/model.sdf models/bluerov2_heavy/configs.yaml
+scripts/generate_model.py models/bluerov2_ping/model.sdf.in models/bluerov2_ping/model.sdf models/bluerov2_ping/configs.yaml
 """
 
 import math
@@ -113,6 +114,7 @@ class ModelParams:
         max_thrust: float = 50,
         servo_range: tuple[float, float] = (1100, 1900),
         control_offset: float = -0.5,
+        ping_sensor: dict = None,
     ) -> None:
         self.model_name = f'"{model_name}"'
         self.mass = mass
@@ -214,6 +216,15 @@ class ModelParams:
 
             setattr(self, f"thruster{thruster_num}_topic", topic)
 
+        self.has_ping_sonar = False
+        if ping_sensor and ping_sensor.get("enabled"):
+            self.has_ping_sonar = True
+            self.ping_mass = ping_sensor["mass"]
+            self.ping_radius = ping_sensor["radius"]
+            self.ping_length = ping_sensor["length"]
+            self.ping_x = ping_sensor["position"]["x"]
+            self.ping_z = ping_sensor["position"]["z"]
+
 
 def get_model_params_from_config(config_path: str) -> ModelParams:
     """Generate a model from a YAML config file.
@@ -228,6 +239,10 @@ def get_model_params_from_config(config_path: str) -> ModelParams:
         config = yaml.safe_load(config_file)
 
         mass = config["mass"]
+
+        ping_sensor = config.get("ping_sensor")
+        if ping_sensor and ping_sensor.get("enabled"):
+            mass += ping_sensor["mass"]
 
         try:
             fluid_density = config["fluid_density"]
@@ -335,6 +350,7 @@ def get_model_params_from_config(config_path: str) -> ModelParams:
                 for thruster in config["thrusters"]
             ],
             config["control_method"],
+            ping_sensor=ping_sensor,
         )
 
 

@@ -1,0 +1,12 @@
+# SITL rangefinder
+RNGFND1_TYPE 100        # Type = SITL
+RNGFND1_FUNCTION 0      # Function = LINEAR
+RNGFND1_MIN_CM 20       # Min distance is 0.5m
+RNGFND1_MAX_CM 5000     # Max distance is 50m
+RNGFND1_ORIENT 25       # Down
+RNGFND1_POS_X -0.18     # From models/bluerov2_ping/model.sdf
+RNGFND1_POS_Y 0.0
+RNGFND1_POS_Z -0.095
+
+# Terrain failsafe kicks in if the rangefinder fails, set action to 1 (hold) instead of 0 (disarm)
+FS_TERRAIN_ENAB	1
