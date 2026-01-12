@@ -50,9 +50,7 @@
     </link>
 
     <!-- Hydrodynamics plugin -->
-    <plugin
-        filename="gz-sim-hydrodynamics-system"
-        name="gz::sim::systems::Hydrodynamics">
+    <plugin filename="gz-sim-hydrodynamics-system" name="gz::sim::systems::Hydrodynamics">
       <link_name>base_link</link_name>
       <water_density>1000.0</water_density>
       <!-- Added mass: -->
@@ -326,9 +324,7 @@
       </axis>
     </joint>
 
-    <plugin
-        filename="gz-sim-thruster-system"
-        name="gz::sim::systems::Thruster">
+    <plugin filename="gz-sim-thruster-system" name="gz::sim::systems::Thruster">
       <namespace>bluerov2_heavy</namespace>
       <joint_name>thruster1_joint</joint_name>
       <thrust_coefficient>0.02</thrust_coefficient>
@@ -338,9 +334,7 @@
       <use_angvel_cmd>False</use_angvel_cmd>
     </plugin>
 
-    <plugin
-        filename="gz-sim-thruster-system"
-        name="gz::sim::systems::Thruster">
+    <plugin filename="gz-sim-thruster-system" name="gz::sim::systems::Thruster">
       <namespace>bluerov2_heavy</namespace>
       <joint_name>thruster2_joint</joint_name>
       <thrust_coefficient>0.02</thrust_coefficient>
@@ -350,9 +344,7 @@
       <use_angvel_cmd>False</use_angvel_cmd>
     </plugin>
 
-    <plugin
-        filename="gz-sim-thruster-system"
-        name="gz::sim::systems::Thruster">
+    <plugin filename="gz-sim-thruster-system" name="gz::sim::systems::Thruster">
       <namespace>bluerov2_heavy</namespace>
       <joint_name>thruster3_joint</joint_name>
       <!-- Reverse spin to balance torque -->
@@ -363,9 +355,7 @@
       <use_angvel_cmd>False</use_angvel_cmd>
     </plugin>
 
-    <plugin
-        filename="gz-sim-thruster-system"
-        name="gz::sim::systems::Thruster">
+    <plugin filename="gz-sim-thruster-system" name="gz::sim::systems::Thruster">
       <namespace>bluerov2_heavy</namespace>
       <joint_name>thruster4_joint</joint_name>
       <!-- Reverse spin to balance torque -->
@@ -376,9 +366,7 @@
       <use_angvel_cmd>False</use_angvel_cmd>
     </plugin>
 
-    <plugin
-        filename="gz-sim-thruster-system"
-        name="gz::sim::systems::Thruster">
+    <plugin filename="gz-sim-thruster-system" name="gz::sim::systems::Thruster">
       <namespace>bluerov2_heavy</namespace>
       <joint_name>thruster5_joint</joint_name>
       <thrust_coefficient>0.02</thrust_coefficient>
@@ -388,9 +376,7 @@
       <use_angvel_cmd>False</use_angvel_cmd>
     </plugin>
 
-    <plugin
-        filename="gz-sim-thruster-system"
-        name="gz::sim::systems::Thruster">
+    <plugin filename="gz-sim-thruster-system" name="gz::sim::systems::Thruster">
       <namespace>bluerov2_heavy</namespace>
       <joint_name>thruster6_joint</joint_name>
       <!-- Reverse spin to balance torque -->
@@ -401,9 +387,7 @@
       <use_angvel_cmd>False</use_angvel_cmd>
     </plugin>
 
-    <plugin
-        filename="gz-sim-thruster-system"
-        name="gz::sim::systems::Thruster">
+    <plugin filename="gz-sim-thruster-system" name="gz::sim::systems::Thruster">
       <namespace>bluerov2_heavy</namespace>
       <joint_name>thruster7_joint</joint_name>
       <!-- Reverse spin to balance torque -->
@@ -414,9 +398,7 @@
       <use_angvel_cmd>False</use_angvel_cmd>
     </plugin>
 
-    <plugin
-        filename="gz-sim-thruster-system"
-        name="gz::sim::systems::Thruster">
+    <plugin filename="gz-sim-thruster-system" name="gz::sim::systems::Thruster">
       <namespace>bluerov2_heavy</namespace>
       <joint_name>thruster8_joint</joint_name>
       <thrust_coefficient>0.02</thrust_coefficient>
@@ -428,7 +410,7 @@
 
     <plugin name="ArduPilotPlugin" filename="libArduPilotPlugin.so">
       <!-- Port settings -->
-      <fdm_addr>127.0.0.1</fdm_addr>
+      <fdm_addr>0.0.0.0</fdm_addr>
       <fdm_port_in>9002</fdm_port_in>
       <connectionTimeoutMaxCount>5</connectionTimeoutMaxCount>
       <lock_step>1</lock_step>
