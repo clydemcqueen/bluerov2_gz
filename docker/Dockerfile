@@ -5,6 +5,8 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 ARG DEBIAN_FRONTEND=noninteractive
 
+ARG ARDUPILOT_GAZEBO_GIT_COMMIT=4b30a3d8
+
 RUN apt-get update && apt-get upgrade -y
 
 # Install language
@@ -58,7 +60,7 @@ RUN apt-get update \
     libegl1 \
     libxext6 \
     libx11-6 \
-  && rm -rf /var/lib/apt/lists/* \
+  && rm -rf /var/lib/apt/lists/*
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=graphics,utility,compute
 ENV QT_X11_NO_MITSHM=1
@@ -91,23 +93,6 @@ RUN groupadd --gid $USER_GID $USERNAME \
 USER $USERNAME
 ENV USER=$USERNAME
 
-# Clone ArduSub code
-WORKDIR /home/$USERNAME
-RUN git clone https://github.com/ArduPilot/ardupilot.git --recurse-submodules
-
-# Install ArduSub prereqs (this also appends to .bashrc)
-WORKDIR /home/$USERNAME/ardupilot
-ENV SKIP_AP_EXT_ENV=1 SKIP_AP_GRAPHIC_ENV=1 SKIP_AP_COV_ENV=1 SKIP_AP_GIT_CHECK=1
-RUN Tools/environment_install/install-prereqs-ubuntu.sh -y
-
-# Build ArduSub
-# Note: waf will capture all of the environment variables in ardupilot/.lock-waf_linux_build.
-# Any change to enviroment variables will cause a re-build.
-# To avoid this call sim_vehicle.py with the "--no-rebuild" option.
-WORKDIR /home/$USERNAME/ardupilot
-RUN modules/waf/waf-light configure --board sitl \
-  && modules/waf/waf-light build --target bin/ardusub
-
 # Clone ardupilot_gazebo code
 WORKDIR /home/$USERNAME
 RUN git clone https://github.com/ArduPilot/ardupilot_gazebo.git
@@ -118,7 +103,7 @@ ENV GZ_VERSION=harmonic
 # Build ardupilot_gazebo
 RUN [ "/bin/bash" , "-c" , " \
   cd ardupilot_gazebo \
-  && git checkout 4b30a3d8 \
+  && git checkout ${ARDUPILOT_GAZEBO_GIT_COMMIT} \
   && mkdir build \
   && cd build \
   && cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -137,3 +122,17 @@ RUN echo "export PATH=/home/$USERNAME/.local/bin:\$PATH" >> /home/$USERNAME/.bas
 
 # Required to use the --console option on sim_vehicle.py
 # RUN pip3 install matplotlib
+
+# Gazebo discovery messages
+EXPOSE 10317/udp
+# Gazebo service discovery
+EXPOSE 10318/udp
+
+# NOTE: You'll need to make the following ports accessible to the ArduPilot SITL:
+# - 9002/udp (Flight Dynamics Model)
+#
+# The best way to do this is by attaching the Gazebo and SITL containers to the
+# same internal Docker network
+
+ENTRYPOINT ["gz"]
+CMD ["sim", "-v", "-s", "-r", "bluerov2"]
