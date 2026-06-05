@@ -483,20 +483,29 @@
         <multiplier>@cw_control_multiplier</multiplier>
       </control>
 
-      <!--
-        Configure ArduSub to use a SITL rangefinder backend:
-        param set RNGFND1_TYPE 100        # Type = SITL
-        param set RNGFND1_FUNCTION 0      # Function = LINEAR
-        param set RNGFND1_MIN_CM 20       # Min distance is 0.5m
-        param set RNGFND1_MAX_CM 5000     # Max distance is 50m
-        param set RNGFND1_ORIENT 25       # Down
-        param set RNGFND1_POS_X @ping_x
-        param set RNGFND1_POS_Y 0.0
-        param set RNGFND1_POS_Z @ping_z
-      -->
+      <!-- Hack: an ardupilot bug means that the first valid index is 2, work around this -->
+
+      <!-- Fake sensor to populate rng_1 -->
       <sensor>
         <type>sonar</type>
         <index>1</index>
+        <topic>dummy_link/sensor/sonar_1</topic>
+      </sensor>
+
+      <!--
+        Configure ArduSub to use a SITL rangefinder backend:
+        param set RNGFND2_TYPE 100        # Type = SITL
+        param set RNGFND2_FUNCTION 0      # Function = LINEAR
+        param set RNGFND2_MIN_CM 20       # Min distance is 0.5m
+        param set RNGFND2_MAX_CM 5000     # Max distance is 50m
+        param set RNGFND2_ORIENT 25       # Down
+        param set RNGFND2_POS_X @ping_x
+        param set RNGFND2_POS_Y 0.0
+        param set RNGFND2_POS_Z @ping_z
+      -->
+      <sensor>
+        <type>sonar</type>
+        <index>2</index>
         <topic>ping_link/sensor/sonar</topic>
       </sensor>
 
