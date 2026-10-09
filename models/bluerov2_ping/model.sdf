@@ -8,14 +8,14 @@
     <link name="base_link">
       <inertial>
         <pose>0.0 0.0 0.011 0 0 0</pose>
-        <mass>10.133</mass>
+        <mass>10.0</mass>
         <inertia>
-          <ixx>0.1</ixx>
+          <ixx>0.099</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>0.18</iyy>
+          <iyy>0.178</iyy>
           <iyz>0</iyz>
-          <izz>0.273</izz>
+          <izz>0.269</izz>
         </inertia>
       </inertial>
 

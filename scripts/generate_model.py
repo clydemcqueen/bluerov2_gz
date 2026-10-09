@@ -94,7 +94,7 @@ class ModelParams:
     def __init__(
         self,
         model_name: str,
-        mass: float,
+        base_mass: float,
         fluid_density: float,
         collision: tuple[float, float, float],
         center_of_mass: tuple[float, float, float],
@@ -106,8 +106,8 @@ class ModelParams:
         default_current: tuple[float, float, float],
         thrusters: list[tuple[float, float, float]],
         use_angvel_cmd: int,
+        propeller_mass: float,
         propeller_size: str = "0.1 0.02 0.01",
-        propeller_mass: float = 0.002,
         propeller_inertia: tuple[float, float, float] = (0.001, 0.001, 0.001),
         propeller_diameter: float = 0.1,
         thrust_coefficient: float = 0.02,
@@ -117,7 +117,7 @@ class ModelParams:
         ping_sensor: dict = None,
     ) -> None:
         self.model_name = f'"{model_name}"'
-        self.mass = mass
+        self.base_mass = base_mass
         self.fluid_density = fluid_density
 
         # The collision box is used by the BuoyancyPlugin
@@ -238,11 +238,17 @@ def get_model_params_from_config(config_path: str) -> ModelParams:
     with open(config_path) as config_file:
         config = yaml.safe_load(config_file)
 
-        mass = config["mass"]
+        # base_link mass
+        base_mass = config["base_mass"]
 
+        # Total mass
+        propeller_mass = 0.002
+        total_mass = base_mass + len(config["thrusters"]) * propeller_mass
+
+        # The optional ping sensor also has mass
         ping_sensor = config.get("ping_sensor")
         if ping_sensor and ping_sensor.get("enabled"):
-            mass += ping_sensor["mass"]
+            total_mass += ping_sensor["mass"]
 
         try:
             fluid_density = config["fluid_density"]
@@ -253,7 +259,7 @@ def get_model_params_from_config(config_path: str) -> ModelParams:
         bounding_y = config["bounding_box"]["y"]
         bounding_z = config["bounding_box"]["z"]
 
-        displaced_mass = mass + config["buoyancy_adjustment"]
+        displaced_mass = total_mass + config["buoyancy_adjustment"]
 
         collision = (
             bounding_x,
@@ -261,6 +267,7 @@ def get_model_params_from_config(config_path: str) -> ModelParams:
             displaced_mass / (bounding_x * bounding_y * fluid_density),
         )
 
+        # base_link inertia
         try:
             inertia = (
                 config["inertia"]["ixx"],
@@ -268,9 +275,9 @@ def get_model_params_from_config(config_path: str) -> ModelParams:
                 config["inertia"]["izz"],
             )
         except KeyError:
-            ixx = mass / 12 * (collision[1] ** 2 + collision[2] ** 2)
-            iyy = mass / 12 * (collision[0] ** 2 + collision[2] ** 2)
-            izz = mass / 12 * (collision[0] ** 2 + collision[1] ** 2)
+            ixx = base_mass / 12 * (collision[1] ** 2 + collision[2] ** 2)
+            iyy = base_mass / 12 * (collision[0] ** 2 + collision[2] ** 2)
+            izz = base_mass / 12 * (collision[0] ** 2 + collision[1] ** 2)
             inertia = (ixx, iyy, izz)
 
         try:
@@ -327,7 +334,7 @@ def get_model_params_from_config(config_path: str) -> ModelParams:
 
         return ModelParams(
             config["model_name"],
-            mass,
+            base_mass,
             fluid_density,
             collision,
             (
@@ -350,6 +357,7 @@ def get_model_params_from_config(config_path: str) -> ModelParams:
                 for thruster in config["thrusters"]
             ],
             config["control_method"],
+            propeller_mass,
             ping_sensor=ping_sensor,
         )
 

@@ -1,5 +1,5 @@
 model_name: "bluerov2_heavy"
-mass: 13.0
+base_mass: 13.0
 control_method: 0
 bounding_box:
   x: 0.457
@@ -13,7 +13,7 @@ center_of_volume:
   x: 0.0
   y: 0.0
   z: 0.06
-buoyancy_adjustment: 0.1
+buoyancy_adjustment: 0.05
 inertia:
   ixx: 0.26
   iyy: 0.23
