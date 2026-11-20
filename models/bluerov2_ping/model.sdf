@@ -394,7 +394,7 @@
           </range>
           <noise>
             <type>gaussian</type>
-            <mean>0.1</mean>
+            <mean>0.0</mean>
             <stddev>0.005</stddev>
           </noise>
         </ray>
